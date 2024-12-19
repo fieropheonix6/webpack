@@ -1,5 +1,6 @@
+// eslint-disable-next-line jest/no-export
 module.exports = (globalTimeout = 2000, nameSuffix = "") => {
-	const state = global["JEST_STATE_SYMBOL"];
+	const state = global.JEST_STATE_SYMBOL;
 	let currentDescribeBlock;
 	let currentlyRunningTest;
 	let runTests = -1;
@@ -9,21 +10,19 @@ module.exports = (globalTimeout = 2000, nameSuffix = "") => {
 	// manually, usually after the suite has been run.
 	const createDisposableFn = (fn, isTest) => {
 		if (!fn) return null;
-		let rfn;
-		if (fn.length >= 1) {
-			rfn = done => {
-				fn((...args) => {
-					if (isTest) runTests++;
-					done(...args);
-				});
-			};
-		} else {
-			rfn = () => {
-				const r = fn();
-				if (isTest) runTests++;
-				return r;
-			};
-		}
+		const rfn =
+			fn.length >= 1
+				? done => {
+						fn((...args) => {
+							if (isTest) runTests++;
+							done(...args);
+						});
+					}
+				: () => {
+						const r = fn();
+						if (isTest) runTests++;
+						return r;
+					};
 		disposables.push(() => {
 			fn = null;
 		});
@@ -59,10 +58,10 @@ module.exports = (globalTimeout = 2000, nameSuffix = "") => {
 		state.hasStarted = false;
 		try {
 			fn();
-		} catch (e) {
+		} catch (err) {
 			// avoid leaking memory
-			e.stack;
-			throw e;
+			err.stack;
+			throw err;
 		}
 		state.currentDescribeBlock = oldCurrentDescribeBlock;
 		state.currentlyRunningTest = oldCurrentlyRunningTest;
@@ -89,6 +88,7 @@ module.exports = (globalTimeout = 2000, nameSuffix = "") => {
 			args[1] = createDisposableFn(args[1], true);
 			args[2] = args[2] || globalTimeout;
 			inSuite(() => {
+				// eslint-disable-next-line jest/no-disabled-tests
 				it(...args);
 				fixAsyncError(
 					currentDescribeBlock.tests[currentDescribeBlock.tests.length - 1]

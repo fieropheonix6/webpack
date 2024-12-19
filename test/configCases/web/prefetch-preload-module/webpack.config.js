@@ -2,15 +2,17 @@
 module.exports = {
 	entry: "./index.mjs",
 	experiments: {
-		outputModule: true
+		outputModule: true,
+		css: true
 	},
 	name: "esm",
 	target: "web",
 	output: {
 		publicPath: "",
 		module: true,
-		filename: "bundle0.js",
-		chunkFilename: "[name].js",
+		filename: "bundle0.mjs",
+		chunkFilename: "[name].mjs",
+		chunkFormat: "module",
 		crossOriginLoading: "anonymous"
 	},
 	performance: {

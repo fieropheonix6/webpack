@@ -1,4 +1,5 @@
 import type { SourceMap } from "../lib/NormalModule";
+import type Module from "../lib/Module";
 import type { validate } from "schema-utils";
 import type { AssetInfo } from "../lib/Compilation";
 import type { ResolveOptionsWithDependencyType } from "../lib/ResolverFactory";
@@ -13,7 +14,13 @@ import type {
 	ImportModuleOptions
 } from "../lib/dependencies/LoaderPlugin";
 import type { Resolver } from "enhanced-resolve";
-import type { Environment } from "./WebpackOptions";
+import type {
+	Environment,
+	HashDigestLength,
+	HashSalt,
+	HashDigest,
+	HashFunction
+} from "./WebpackOptions";
 
 type ResolveCallback = Parameters<Resolver["resolve"]>[4];
 type Schema = Parameters<typeof validate>[0];
@@ -41,13 +48,17 @@ export interface NormalModuleLoaderContext<OptionsType> {
 	utils: {
 		absolutify: (context: string, request: string) => string;
 		contextify: (context: string, request: string) => string;
-		createHash: (algorithm?: string) => Hash;
+		createHash: (algorithm?: string | typeof Hash) => Hash;
 	};
 	rootContext: string;
 	fs: InputFileSystem;
 	sourceMap?: boolean;
 	mode: "development" | "production" | "none";
 	webpack?: boolean;
+	hashFunction: HashFunction,
+	hashDigest: HashDigest,
+	hashDigestLength: HashDigestLength,
+	hashSalt: HashSalt,
 	_module?: NormalModule;
 	_compilation?: Compilation;
 	_compiler?: Compiler;
@@ -70,15 +81,15 @@ export interface LoaderPluginLoaderContext {
 		request: string,
 		callback: (
 			err: Error | null,
-			source: string,
-			sourceMap: any,
-			module: NormalModule
+			source?: string | Buffer,
+			sourceMap?: object | null,
+			module?: Module
 		) => void
 	): void;
 
 	importModule(
 		request: string,
-		options: ImportModuleOptions,
+		options: ImportModuleOptions | undefined,
 		callback: ImportModuleCallback
 	): void;
 	importModule(request: string, options?: ImportModuleOptions): Promise<any>;

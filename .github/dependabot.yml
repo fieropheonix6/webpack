@@ -10,6 +10,16 @@ updates:
     labels:
       - dependencies
     versioning-strategy: widen
+    groups:
+      dependencies:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "eslint-scope"
+          - "json-parse-even-better-errors"
+          - "schema-utils"
+          - "strip-ansi"
+          - "rimraf"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

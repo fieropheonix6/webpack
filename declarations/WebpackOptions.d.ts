@@ -36,6 +36,14 @@ export type Context = string;
  */
 export type Dependencies = string[];
 /**
+ * Options for the webpack-dev-server.
+ */
+export type DevServer =
+	| false
+	| {
+			[k: string]: any;
+	  };
+/**
  * A developer tool to enhance debugging (false | eval | [inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map).
  */
 export type DevTool = (false | "eval") | string;
@@ -151,9 +159,7 @@ export type WasmLoading = false | WasmLoadingType;
 /**
  * The method of loading WebAssembly Modules (methods included by default are 'fetch' (web/WebWorker), 'async-node' (node.js), but others might be added by plugins).
  */
-export type WasmLoadingType =
-	| ("fetch-streaming" | "fetch" | "async-node")
-	| string;
+export type WasmLoadingType = ("fetch" | "async-node") | string;
 /**
  * An entry point without name.
  */
@@ -184,7 +190,7 @@ export type ExternalItem =
 	| (
 			| ((
 					data: ExternalItemFunctionData,
-					callback: (err?: Error, result?: ExternalItemValue) => void
+					callback: (err?: Error | null, result?: ExternalItemValue) => void
 			  ) => void)
 			| ((data: ExternalItemFunctionData) => Promise<ExternalItemValue>)
 	  );
@@ -211,6 +217,7 @@ export type ExternalsType =
 	| "system"
 	| "promise"
 	| "import"
+	| "module-import"
 	| "script"
 	| "node-commonjs";
 /**
@@ -249,6 +256,10 @@ export type FilterItemTypes = RegExp | string | ((value: string) => boolean);
  * Enable production optimizations or development hints.
  */
 export type Mode = "development" | "production" | "none";
+/**
+ * These values will be ignored by webpack and created to be used with '&&' or '||' to improve readability of configurations.
+ */
+export type Falsy = false | 0 | "" | null | undefined;
 /**
  * One or multiple rule conditions.
  */
@@ -322,17 +333,32 @@ export type ResolveAlias =
 			[k: string]: string[] | false | string;
 	  };
 /**
+ * Plugin instance.
+ */
+export type ResolvePluginInstance =
+	| {
+			/**
+			 * The run point of the plugin, required method.
+			 */
+			apply: (arg0: import("enhanced-resolve").Resolver) => void;
+			[k: string]: any;
+	  }
+	| ((
+			this: import("enhanced-resolve").Resolver,
+			arg1: import("enhanced-resolve").Resolver
+	  ) => void);
+/**
  * A list of descriptions of loaders applied.
  */
 export type RuleSetUse =
-	| RuleSetUseItem[]
+	| (Falsy | RuleSetUseItem)[]
 	| ((data: {
 			resource: string;
 			realResource: string;
 			resourceQuery: string;
 			issuer: string;
 			compiler: string;
-	  }) => RuleSetUseItem[])
+	  }) => (Falsy | RuleSetUseItem)[])
 	| RuleSetUseItem;
 /**
  * A description of an applied loader.
@@ -352,12 +378,12 @@ export type RuleSetUseItem =
 			 */
 			options?: RuleSetLoaderOptions;
 	  }
-	| ((data: object) => RuleSetUseItem | RuleSetUseItem[])
+	| ((data: object) => RuleSetUseItem | (Falsy | RuleSetUseItem)[])
 	| RuleSetLoader;
 /**
  * A list of rules.
  */
-export type RuleSetRules = ("..." | RuleSetRule)[];
+export type RuleSetRules = ("..." | Falsy | RuleSetRule)[];
 /**
  * Specify options for each generator.
  */
@@ -596,7 +622,7 @@ export type Performance = false | PerformanceOptions;
 /**
  * Add additional plugins to the compiler.
  */
-export type Plugins = (WebpackPluginInstance | WebpackPluginFunction)[];
+export type Plugins = (Falsy | WebpackPluginInstance | WebpackPluginFunction)[];
 /**
  * Capture timing information for each module.
  */
@@ -724,6 +750,36 @@ export type AssetParserDataUrlFunction = (
 	source: string | Buffer,
 	context: {filename: string; module: import("../lib/Module")}
 ) => boolean;
+/**
+ * Configure the generated JS modules that use the ES modules syntax.
+ */
+export type CssGeneratorEsModule = boolean;
+/**
+ * Specifies the convention of exported names.
+ */
+export type CssGeneratorExportsConvention =
+	| ("as-is" | "camel-case" | "camel-case-only" | "dashes" | "dashes-only")
+	| ((name: string) => string);
+/**
+ * Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.
+ */
+export type CssGeneratorExportsOnly = boolean;
+/**
+ * Configure the generated local ident name.
+ */
+export type CssGeneratorLocalIdentName = string;
+/**
+ * Enable/disable `@import` at-rules handling.
+ */
+export type CssParserImport = boolean;
+/**
+ * Use ES modules named export for css exports.
+ */
+export type CssParserNamedExports = boolean;
+/**
+ * Enable/disable `url()`/`image-set()`/`src()`/`image()` functions handling.
+ */
+export type CssParserUrl = boolean;
 /**
  * A Function returning a Promise resolving to a normalized entry.
  */
@@ -1042,12 +1098,6 @@ export interface FileCacheOptions {
 	 * Version of the cache data. Different versions won't allow to reuse the cache and override existing content. Update the version when config changed in a way which doesn't allow to reuse cache. This will invalidate the cache.
 	 */
 	version?: string;
-}
-/**
- * Options for the webpack-dev-server.
- */
-export interface DevServer {
-	[k: string]: any;
 }
 /**
  * Multiple entry bundles are created. The key is the entry name. The value can be a string, an array or an entry description object.
@@ -1392,7 +1442,7 @@ export interface RuleSetRule {
 	/**
 	 * Only execute the first matching rule in this array.
 	 */
-	oneOf?: RuleSetRule[];
+	oneOf?: (Falsy | RuleSetRule)[];
 	/**
 	 * Shortcut for use.options.
 	 */
@@ -1426,7 +1476,7 @@ export interface RuleSetRule {
 	/**
 	 * Match and execute these rules when this rule is matched.
 	 */
-	rules?: RuleSetRule[];
+	rules?: (Falsy | RuleSetRule)[];
 	/**
 	 * Match module scheme.
 	 */
@@ -1447,6 +1497,12 @@ export interface RuleSetRule {
 	 * Modifiers applied to the module when rule is matched.
 	 */
 	use?: RuleSetUse;
+	/**
+	 * Match on import attributes of the dependency.
+	 */
+	with?: {
+		[k: string]: RuleSetConditionOrConditions;
+	};
 }
 /**
  * Logic operators used in a condition matcher.
@@ -1577,7 +1633,7 @@ export interface ResolveOptions {
 	/**
 	 * Plugins for the resolver.
 	 */
-	plugins?: ("..." | ResolvePluginInstance)[];
+	plugins?: ("..." | Falsy | ResolvePluginInstance)[];
 	/**
 	 * Prefer to resolve server-relative URLs (starting with '/') as absolute paths before falling back to resolve in 'resolve.roots'.
 	 */
@@ -1616,27 +1672,23 @@ export interface ResolveOptions {
 	useSyncFileSystemCalls?: boolean;
 }
 /**
- * Plugin instance.
- */
-export interface ResolvePluginInstance {
-	/**
-	 * The run point of the plugin, required method.
-	 */
-	apply: (resolver: import("enhanced-resolve").Resolver) => void;
-	[k: string]: any;
-}
-/**
  * Options object for node compatibility features.
  */
 export interface NodeOptions {
 	/**
 	 * Include a polyfill for the '__dirname' variable.
 	 */
-	__dirname?: false | true | "warn-mock" | "mock" | "eval-only";
+	__dirname?: false | true | "warn-mock" | "mock" | "node-module" | "eval-only";
 	/**
 	 * Include a polyfill for the '__filename' variable.
 	 */
-	__filename?: false | true | "warn-mock" | "mock" | "eval-only";
+	__filename?:
+		| false
+		| true
+		| "warn-mock"
+		| "mock"
+		| "node-module"
+		| "eval-only";
 	/**
 	 * Include a polyfill for the 'global' variable.
 	 */
@@ -1646,6 +1698,10 @@ export interface NodeOptions {
  * Enables/Disables integrated optimizations.
  */
 export interface Optimization {
+	/**
+	 * Avoid wrapping the entry module in an IIFE.
+	 */
+	avoidEntryIife?: boolean;
 	/**
 	 * Check for incompatible wasm types when importing/exporting from/to ESM.
 	 */
@@ -1695,7 +1751,7 @@ export interface Optimization {
 	/**
 	 * Minimizer(s) to use for minimizing the output.
 	 */
-	minimizer?: ("..." | WebpackPluginInstance | WebpackPluginFunction)[];
+	minimizer?: ("..." | Falsy | WebpackPluginInstance | WebpackPluginFunction)[];
 	/**
 	 * Define the algorithm to choose module ids (natural: numeric ids in order of usage, named: readable ids for better debugging, hashed: (deprecated) short hashes as ids for better long term caching, deterministic: numeric hash ids for better long term caching, size: numeric ids focused on minimal initial download size, false: no algorithm used, as custom one can be provided via plugin).
 	 */
@@ -1782,6 +1838,7 @@ export interface OptimizationSplitChunksOptions {
 	 */
 	chunks?:
 		| ("initial" | "async" | "all")
+		| RegExp
 		| ((chunk: import("../lib/Chunk")) => boolean);
 	/**
 	 * Sets the size types which are used when a number is used for sizes.
@@ -1804,6 +1861,7 @@ export interface OptimizationSplitChunksOptions {
 		 */
 		chunks?:
 			| ("initial" | "async" | "all")
+			| RegExp
 			| ((chunk: import("../lib/Chunk")) => boolean);
 		/**
 		 * Maximal size hint for the on-demand chunks.
@@ -1897,6 +1955,7 @@ export interface OptimizationSplitChunksCacheGroup {
 	 */
 	chunks?:
 		| ("initial" | "async" | "all")
+		| RegExp
 		| ((chunk: import("../lib/Chunk")) => boolean);
 	/**
 	 * Ignore minimum size, minimum chunks and maximum requests and always create chunks for this cache group.
@@ -2231,6 +2290,10 @@ export interface Environment {
 	 */
 	arrowFunction?: boolean;
 	/**
+	 * The environment supports async function and await ('async function () { await ... }').
+	 */
+	asyncFunction?: boolean;
+	/**
 	 * The environment supports BigInt as literal (123n).
 	 */
 	bigIntLiteral?: boolean;
@@ -2242,6 +2305,10 @@ export interface Environment {
 	 * The environment supports destructuring ('{ a, b } = obj').
 	 */
 	destructuring?: boolean;
+	/**
+	 * The environment supports 'document'.
+	 */
+	document?: boolean;
 	/**
 	 * The environment supports an async import() function to import EcmaScript modules.
 	 */
@@ -2262,6 +2329,10 @@ export interface Environment {
 	 * The environment supports EcmaScript Module syntax to import EcmaScript modules (import ... from '...').
 	 */
 	module?: boolean;
+	/**
+	 * The environment supports `node:` prefix for Node.js core modules.
+	 */
+	nodePrefixForCoreModules?: boolean;
 	/**
 	 * The environment supports optional chaining ('obj?.a' or 'obj?.()').
 	 */
@@ -2369,6 +2440,10 @@ export interface SnapshotOptions {
 		 */
 		timestamp?: boolean;
 	};
+	/**
+	 * List of paths that are not managed by a package manager and the contents are subject to change.
+	 */
+	unmanagedPaths?: (RegExp | string)[];
 }
 /**
  * Stats options object.
@@ -2753,6 +2828,10 @@ export interface AssetGeneratorDataUrlOptions {
  */
 export interface AssetInlineGeneratorOptions {
 	/**
+	 * Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.
+	 */
+	binary?: boolean;
+	/**
 	 * The options for data url generator.
 	 */
 	dataUrl?: AssetGeneratorDataUrl;
@@ -2780,6 +2859,10 @@ export interface AssetParserOptions {
  */
 export interface AssetResourceGeneratorOptions {
 	/**
+	 * Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.
+	 */
+	binary?: boolean;
+	/**
 	 * Emit an output asset from this asset module. This can be set to 'false' to omit emitting e. g. for SSR.
 	 */
 	emit?: boolean;
@@ -2797,22 +2880,149 @@ export interface AssetResourceGeneratorOptions {
 	publicPath?: RawPublicPath;
 }
 /**
- * Options for css handling.
+ * Generator options for css/auto modules.
  */
-export interface CssExperimentOptions {
+export interface CssAutoGeneratorOptions {
+	/**
+	 * Configure the generated JS modules that use the ES modules syntax.
+	 */
+	esModule?: CssGeneratorEsModule;
+	/**
+	 * Specifies the convention of exported names.
+	 */
+	exportsConvention?: CssGeneratorExportsConvention;
 	/**
 	 * Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.
 	 */
-	exportsOnly?: boolean;
+	exportsOnly?: CssGeneratorExportsOnly;
+	/**
+	 * Configure the generated local ident name.
+	 */
+	localIdentName?: CssGeneratorLocalIdentName;
+}
+/**
+ * Parser options for css/auto modules.
+ */
+export interface CssAutoParserOptions {
+	/**
+	 * Enable/disable `@import` at-rules handling.
+	 */
+	import?: CssParserImport;
+	/**
+	 * Use ES modules named export for css exports.
+	 */
+	namedExports?: CssParserNamedExports;
+	/**
+	 * Enable/disable `url()`/`image-set()`/`src()`/`image()` functions handling.
+	 */
+	url?: CssParserUrl;
 }
 /**
  * Generator options for css modules.
  */
-export interface CssGeneratorOptions {}
+export interface CssGeneratorOptions {
+	/**
+	 * Configure the generated JS modules that use the ES modules syntax.
+	 */
+	esModule?: CssGeneratorEsModule;
+	/**
+	 * Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.
+	 */
+	exportsOnly?: CssGeneratorExportsOnly;
+}
+/**
+ * Generator options for css/global modules.
+ */
+export interface CssGlobalGeneratorOptions {
+	/**
+	 * Configure the generated JS modules that use the ES modules syntax.
+	 */
+	esModule?: CssGeneratorEsModule;
+	/**
+	 * Specifies the convention of exported names.
+	 */
+	exportsConvention?: CssGeneratorExportsConvention;
+	/**
+	 * Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.
+	 */
+	exportsOnly?: CssGeneratorExportsOnly;
+	/**
+	 * Configure the generated local ident name.
+	 */
+	localIdentName?: CssGeneratorLocalIdentName;
+}
+/**
+ * Parser options for css/global modules.
+ */
+export interface CssGlobalParserOptions {
+	/**
+	 * Enable/disable `@import` at-rules handling.
+	 */
+	import?: CssParserImport;
+	/**
+	 * Use ES modules named export for css exports.
+	 */
+	namedExports?: CssParserNamedExports;
+	/**
+	 * Enable/disable `url()`/`image-set()`/`src()`/`image()` functions handling.
+	 */
+	url?: CssParserUrl;
+}
+/**
+ * Generator options for css/module modules.
+ */
+export interface CssModuleGeneratorOptions {
+	/**
+	 * Configure the generated JS modules that use the ES modules syntax.
+	 */
+	esModule?: CssGeneratorEsModule;
+	/**
+	 * Specifies the convention of exported names.
+	 */
+	exportsConvention?: CssGeneratorExportsConvention;
+	/**
+	 * Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.
+	 */
+	exportsOnly?: CssGeneratorExportsOnly;
+	/**
+	 * Configure the generated local ident name.
+	 */
+	localIdentName?: CssGeneratorLocalIdentName;
+}
+/**
+ * Parser options for css/module modules.
+ */
+export interface CssModuleParserOptions {
+	/**
+	 * Enable/disable `@import` at-rules handling.
+	 */
+	import?: CssParserImport;
+	/**
+	 * Use ES modules named export for css exports.
+	 */
+	namedExports?: CssParserNamedExports;
+	/**
+	 * Enable/disable `url()`/`image-set()`/`src()`/`image()` functions handling.
+	 */
+	url?: CssParserUrl;
+}
 /**
  * Parser options for css modules.
  */
-export interface CssParserOptions {}
+export interface CssParserOptions {
+	/**
+	 * Enable/disable `@import` at-rules handling.
+	 */
+	import?: CssParserImport;
+	/**
+	 * Use ES modules named export for css exports.
+	 */
+	namedExports?: CssParserNamedExports;
+	/**
+	 * Enable/disable `url()`/`image-set()`/`src()`/`image()` functions handling.
+	 */
+	url?: CssParserUrl;
+}
 /**
  * No generator options are supported for this module type.
  */
@@ -3003,6 +3213,10 @@ export interface JavascriptParserOptions {
 	 */
 	createRequire?: boolean | string;
 	/**
+	 * Specifies global fetchPriority for dynamic import.
+	 */
+	dynamicImportFetchPriority?: "low" | "high" | "auto" | false;
+	/**
 	 * Specifies global mode for dynamic import.
 	 */
 	dynamicImportMode?: "eager" | "weak" | "lazy" | "lazy-once";
@@ -3058,6 +3272,10 @@ export interface JavascriptParserOptions {
 	 * Include polyfills or mocks for various node stuff.
 	 */
 	node?: Node;
+	/**
+	 * Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.
+	 */
+	overrideStrict?: "strict" | "non-strict";
 	/**
 	 * Specifies the behavior of invalid export names in "export ... from ...". This might be useful to disable during the migration from "export ... from ..." to "export type ... from ..." when reexporting types in TypeScript.
 	 */
@@ -3166,7 +3384,7 @@ export interface LazyCompilationOptions {
 				| ((
 						compiler: import("../lib/Compiler"),
 						callback: (
-							err?: Error,
+							err: Error | null,
 							api?: import("../lib/hmr/LazyCompilationPlugin").BackendApi
 						) => void
 				  ) => void)
@@ -3288,19 +3506,19 @@ export interface OutputNormalized {
 	/**
 	 * List of chunk loading types enabled for use by entry points.
 	 */
-	enabledChunkLoadingTypes?: EnabledChunkLoadingTypes;
+	enabledChunkLoadingTypes: EnabledChunkLoadingTypes;
 	/**
 	 * List of library types enabled for use by entry points.
 	 */
-	enabledLibraryTypes?: EnabledLibraryTypes;
+	enabledLibraryTypes: EnabledLibraryTypes;
 	/**
 	 * List of wasm loading types enabled for use by entry points.
 	 */
-	enabledWasmLoadingTypes?: EnabledWasmLoadingTypes;
+	enabledWasmLoadingTypes: EnabledWasmLoadingTypes;
 	/**
 	 * The abilities of the environment where the webpack generated code should run.
 	 */
-	environment?: Environment;
+	environment: Environment;
 	/**
 	 * Specifies the filename of output files on disk. You must **not** specify an absolute path here, but the path may contain folders separated by '/'! The specified path is joined with the value of the 'output.path' option to determine the location on disk.
 	 */
@@ -3574,7 +3792,7 @@ export interface ExperimentsExtra {
 	/**
 	 * Enable css support.
 	 */
-	css?: boolean | CssExperimentOptions;
+	css?: boolean;
 	/**
 	 * Compile entrypoints and import()s only when they are accessed.
 	 */
@@ -3591,7 +3809,7 @@ export interface ExperimentsNormalizedExtra {
 	/**
 	 * Enable css support.
 	 */
-	css?: false | CssExperimentOptions;
+	css?: boolean;
 	/**
 	 * Compile entrypoints and import()s only when they are accessed.
 	 */
@@ -3632,6 +3850,22 @@ export interface GeneratorOptionsByModuleTypeKnown {
 	 * Generator options for asset/resource modules.
 	 */
 	"asset/resource"?: AssetResourceGeneratorOptions;
+	/**
+	 * Generator options for css modules.
+	 */
+	css?: CssGeneratorOptions;
+	/**
+	 * Generator options for css/auto modules.
+	 */
+	"css/auto"?: CssAutoGeneratorOptions;
+	/**
+	 * Generator options for css/global modules.
+	 */
+	"css/global"?: CssGlobalGeneratorOptions;
+	/**
+	 * Generator options for css/module modules.
+	 */
+	"css/module"?: CssModuleGeneratorOptions;
 	/**
 	 * No generator options are supported for this module type.
 	 */
@@ -3680,6 +3914,22 @@ export interface ParserOptionsByModuleTypeKnown {
 	 * No parser options are supported for this module type.
 	 */
 	"asset/source"?: EmptyParserOptions;
+	/**
+	 * Parser options for css modules.
+	 */
+	css?: CssParserOptions;
+	/**
+	 * Parser options for css/auto modules.
+	 */
+	"css/auto"?: CssAutoParserOptions;
+	/**
+	 * Parser options for css/global modules.
+	 */
+	"css/global"?: CssGlobalParserOptions;
+	/**
+	 * Parser options for css/module modules.
+	 */
+	"css/module"?: CssModuleParserOptions;
 	/**
 	 * Parser options for javascript modules.
 	 */

@@ -426,6 +426,22 @@ Object {
     "multiple": false,
     "simpleType": "boolean",
   },
+  "dev-server": Object {
+    "configs": Array [
+      Object {
+        "description": "Disable dev server.",
+        "multiple": false,
+        "path": "devServer",
+        "type": "enum",
+        "values": Array [
+          false,
+        ],
+      },
+    ],
+    "description": "Disable dev server.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
   "devtool": Object {
     "configs": Array [
       Object {
@@ -630,19 +646,6 @@ Object {
       },
     ],
     "description": "Enable css support.",
-    "multiple": false,
-    "simpleType": "boolean",
-  },
-  "experiments-css-exports-only": Object {
-    "configs": Array [
-      Object {
-        "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
-        "multiple": false,
-        "path": "experiments.css.exportsOnly",
-        "type": "boolean",
-      },
-    ],
-    "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
     "multiple": false,
     "simpleType": "boolean",
   },
@@ -1027,6 +1030,7 @@ Object {
           "system",
           "promise",
           "import",
+          "module-import",
           "script",
           "node-commonjs",
         ],
@@ -1262,6 +1266,19 @@ Object {
     "multiple": false,
     "simpleType": "string",
   },
+  "module-generator-asset-binary": Object {
+    "configs": Array [
+      Object {
+        "description": "Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.",
+        "multiple": false,
+        "path": "module.generator.asset.binary",
+        "type": "boolean",
+      },
+    ],
+    "description": "Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
   "module-generator-asset-data-url-encoding": Object {
     "configs": Array [
       Object {
@@ -1317,6 +1334,19 @@ Object {
     "description": "Specifies the filename template of output files on disk. You must **not** specify an absolute path here, but the path may contain folders separated by '/'! The specified path is joined with the value of the 'output.path' option to determine the location on disk.",
     "multiple": false,
     "simpleType": "string",
+  },
+  "module-generator-asset-inline-binary": Object {
+    "configs": Array [
+      Object {
+        "description": "Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.",
+        "multiple": false,
+        "path": "module.generator.asset/inline.binary",
+        "type": "boolean",
+      },
+    ],
+    "description": "Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.",
+    "multiple": false,
+    "simpleType": "boolean",
   },
   "module-generator-asset-inline-data-url-encoding": Object {
     "configs": Array [
@@ -1374,6 +1404,19 @@ Object {
     "multiple": false,
     "simpleType": "string",
   },
+  "module-generator-asset-resource-binary": Object {
+    "configs": Array [
+      Object {
+        "description": "Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.",
+        "multiple": false,
+        "path": "module.generator.asset/resource.binary",
+        "type": "boolean",
+      },
+    ],
+    "description": "Whether or not this asset module should be considered binary. This can be set to 'false' to treat this asset module as text.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
   "module-generator-asset-resource-emit": Object {
     "configs": Array [
       Object {
@@ -1426,6 +1469,209 @@ Object {
     "multiple": false,
     "simpleType": "string",
   },
+  "module-generator-css-auto-es-module": Object {
+    "configs": Array [
+      Object {
+        "description": "Configure the generated JS modules that use the ES modules syntax.",
+        "multiple": false,
+        "path": "module.generator.css/auto.esModule",
+        "type": "boolean",
+      },
+    ],
+    "description": "Configure the generated JS modules that use the ES modules syntax.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-auto-exports-convention": Object {
+    "configs": Array [
+      Object {
+        "description": "Specifies the convention of exported names.",
+        "multiple": false,
+        "path": "module.generator.css/auto.exportsConvention",
+        "type": "enum",
+        "values": Array [
+          "as-is",
+          "camel-case",
+          "camel-case-only",
+          "dashes",
+          "dashes-only",
+        ],
+      },
+    ],
+    "description": "Specifies the convention of exported names.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-generator-css-auto-exports-only": Object {
+    "configs": Array [
+      Object {
+        "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+        "multiple": false,
+        "path": "module.generator.css/auto.exportsOnly",
+        "type": "boolean",
+      },
+    ],
+    "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-auto-local-ident-name": Object {
+    "configs": Array [
+      Object {
+        "description": "Configure the generated local ident name.",
+        "multiple": false,
+        "path": "module.generator.css/auto.localIdentName",
+        "type": "string",
+      },
+    ],
+    "description": "Configure the generated local ident name.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-generator-css-es-module": Object {
+    "configs": Array [
+      Object {
+        "description": "Configure the generated JS modules that use the ES modules syntax.",
+        "multiple": false,
+        "path": "module.generator.css.esModule",
+        "type": "boolean",
+      },
+    ],
+    "description": "Configure the generated JS modules that use the ES modules syntax.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-exports-only": Object {
+    "configs": Array [
+      Object {
+        "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+        "multiple": false,
+        "path": "module.generator.css.exportsOnly",
+        "type": "boolean",
+      },
+    ],
+    "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-global-es-module": Object {
+    "configs": Array [
+      Object {
+        "description": "Configure the generated JS modules that use the ES modules syntax.",
+        "multiple": false,
+        "path": "module.generator.css/global.esModule",
+        "type": "boolean",
+      },
+    ],
+    "description": "Configure the generated JS modules that use the ES modules syntax.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-global-exports-convention": Object {
+    "configs": Array [
+      Object {
+        "description": "Specifies the convention of exported names.",
+        "multiple": false,
+        "path": "module.generator.css/global.exportsConvention",
+        "type": "enum",
+        "values": Array [
+          "as-is",
+          "camel-case",
+          "camel-case-only",
+          "dashes",
+          "dashes-only",
+        ],
+      },
+    ],
+    "description": "Specifies the convention of exported names.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-generator-css-global-exports-only": Object {
+    "configs": Array [
+      Object {
+        "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+        "multiple": false,
+        "path": "module.generator.css/global.exportsOnly",
+        "type": "boolean",
+      },
+    ],
+    "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-global-local-ident-name": Object {
+    "configs": Array [
+      Object {
+        "description": "Configure the generated local ident name.",
+        "multiple": false,
+        "path": "module.generator.css/global.localIdentName",
+        "type": "string",
+      },
+    ],
+    "description": "Configure the generated local ident name.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-generator-css-module-es-module": Object {
+    "configs": Array [
+      Object {
+        "description": "Configure the generated JS modules that use the ES modules syntax.",
+        "multiple": false,
+        "path": "module.generator.css/module.esModule",
+        "type": "boolean",
+      },
+    ],
+    "description": "Configure the generated JS modules that use the ES modules syntax.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-module-exports-convention": Object {
+    "configs": Array [
+      Object {
+        "description": "Specifies the convention of exported names.",
+        "multiple": false,
+        "path": "module.generator.css/module.exportsConvention",
+        "type": "enum",
+        "values": Array [
+          "as-is",
+          "camel-case",
+          "camel-case-only",
+          "dashes",
+          "dashes-only",
+        ],
+      },
+    ],
+    "description": "Specifies the convention of exported names.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-generator-css-module-exports-only": Object {
+    "configs": Array [
+      Object {
+        "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+        "multiple": false,
+        "path": "module.generator.css/module.exportsOnly",
+        "type": "boolean",
+      },
+    ],
+    "description": "Avoid generating and loading a stylesheet and only embed exports from css into output javascript files.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-generator-css-module-local-ident-name": Object {
+    "configs": Array [
+      Object {
+        "description": "Configure the generated local ident name.",
+        "multiple": false,
+        "path": "module.generator.css/module.localIdentName",
+        "type": "string",
+      },
+    ],
+    "description": "Configure the generated local ident name.",
+    "multiple": false,
+    "simpleType": "string",
+  },
   "module-no-parse": Object {
     "configs": Array [
       Object {
@@ -1470,6 +1716,162 @@ Object {
     "description": "Maximum size of asset that should be inline as modules. Default: 8kb.",
     "multiple": false,
     "simpleType": "number",
+  },
+  "module-parser-css-auto-import": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`@import\` at-rules handling.",
+        "multiple": false,
+        "path": "module.parser.css/auto.import",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`@import\` at-rules handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-auto-named-exports": Object {
+    "configs": Array [
+      Object {
+        "description": "Use ES modules named export for css exports.",
+        "multiple": false,
+        "path": "module.parser.css/auto.namedExports",
+        "type": "boolean",
+      },
+    ],
+    "description": "Use ES modules named export for css exports.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-auto-url": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+        "multiple": false,
+        "path": "module.parser.css/auto.url",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-global-import": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`@import\` at-rules handling.",
+        "multiple": false,
+        "path": "module.parser.css/global.import",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`@import\` at-rules handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-global-named-exports": Object {
+    "configs": Array [
+      Object {
+        "description": "Use ES modules named export for css exports.",
+        "multiple": false,
+        "path": "module.parser.css/global.namedExports",
+        "type": "boolean",
+      },
+    ],
+    "description": "Use ES modules named export for css exports.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-global-url": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+        "multiple": false,
+        "path": "module.parser.css/global.url",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-import": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`@import\` at-rules handling.",
+        "multiple": false,
+        "path": "module.parser.css.import",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`@import\` at-rules handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-module-import": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`@import\` at-rules handling.",
+        "multiple": false,
+        "path": "module.parser.css/module.import",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`@import\` at-rules handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-module-named-exports": Object {
+    "configs": Array [
+      Object {
+        "description": "Use ES modules named export for css exports.",
+        "multiple": false,
+        "path": "module.parser.css/module.namedExports",
+        "type": "boolean",
+      },
+    ],
+    "description": "Use ES modules named export for css exports.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-module-url": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+        "multiple": false,
+        "path": "module.parser.css/module.url",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-named-exports": Object {
+    "configs": Array [
+      Object {
+        "description": "Use ES modules named export for css exports.",
+        "multiple": false,
+        "path": "module.parser.css.namedExports",
+        "type": "boolean",
+      },
+    ],
+    "description": "Use ES modules named export for css exports.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "module-parser-css-url": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+        "multiple": false,
+        "path": "module.parser.css.url",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable/disable \`url()\`/\`image-set()\`/\`src()\`/\`image()\` functions handling.",
+    "multiple": false,
+    "simpleType": "boolean",
   },
   "module-parser-javascript-amd": Object {
     "configs": Array [
@@ -1558,6 +1960,25 @@ Object {
       },
     ],
     "description": "Enable/disable parsing \\"import { createRequire } from \\"module\\"\\" and evaluating createRequire().",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-parser-javascript-auto-dynamic-import-fetch-priority": Object {
+    "configs": Array [
+      Object {
+        "description": "Specifies global fetchPriority for dynamic import.",
+        "multiple": false,
+        "path": "module.parser.javascript/auto.dynamicImportFetchPriority",
+        "type": "enum",
+        "values": Array [
+          "low",
+          "high",
+          "auto",
+          false,
+        ],
+      },
+    ],
+    "description": "Specifies global fetchPriority for dynamic import.",
     "multiple": false,
     "simpleType": "string",
   },
@@ -1794,6 +2215,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -1814,6 +2236,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -1837,6 +2260,23 @@ Object {
       },
     ],
     "description": "Include a polyfill for the 'global' variable.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-parser-javascript-auto-override-strict": Object {
+    "configs": Array [
+      Object {
+        "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
+        "multiple": false,
+        "path": "module.parser.javascript/auto.overrideStrict",
+        "type": "enum",
+        "values": Array [
+          "strict",
+          "non-strict",
+        ],
+      },
+    ],
+    "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
     "multiple": false,
     "simpleType": "string",
   },
@@ -2233,6 +2673,25 @@ Object {
     "multiple": false,
     "simpleType": "string",
   },
+  "module-parser-javascript-dynamic-dynamic-import-fetch-priority": Object {
+    "configs": Array [
+      Object {
+        "description": "Specifies global fetchPriority for dynamic import.",
+        "multiple": false,
+        "path": "module.parser.javascript/dynamic.dynamicImportFetchPriority",
+        "type": "enum",
+        "values": Array [
+          "low",
+          "high",
+          "auto",
+          false,
+        ],
+      },
+    ],
+    "description": "Specifies global fetchPriority for dynamic import.",
+    "multiple": false,
+    "simpleType": "string",
+  },
   "module-parser-javascript-dynamic-dynamic-import-mode": Object {
     "configs": Array [
       Object {
@@ -2412,6 +2871,25 @@ Object {
     "multiple": false,
     "simpleType": "string",
   },
+  "module-parser-javascript-dynamic-import-fetch-priority": Object {
+    "configs": Array [
+      Object {
+        "description": "Specifies global fetchPriority for dynamic import.",
+        "multiple": false,
+        "path": "module.parser.javascript.dynamicImportFetchPriority",
+        "type": "enum",
+        "values": Array [
+          "low",
+          "high",
+          "auto",
+          false,
+        ],
+      },
+    ],
+    "description": "Specifies global fetchPriority for dynamic import.",
+    "multiple": false,
+    "simpleType": "string",
+  },
   "module-parser-javascript-dynamic-import-meta": Object {
     "configs": Array [
       Object {
@@ -2523,6 +3001,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -2543,6 +3022,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -2566,6 +3046,23 @@ Object {
       },
     ],
     "description": "Include a polyfill for the 'global' variable.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-parser-javascript-dynamic-override-strict": Object {
+    "configs": Array [
+      Object {
+        "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
+        "multiple": false,
+        "path": "module.parser.javascript/dynamic.overrideStrict",
+        "type": "enum",
+        "values": Array [
+          "strict",
+          "non-strict",
+        ],
+      },
+    ],
+    "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
     "multiple": false,
     "simpleType": "string",
   },
@@ -2904,6 +3401,25 @@ Object {
     "multiple": false,
     "simpleType": "string",
   },
+  "module-parser-javascript-esm-dynamic-import-fetch-priority": Object {
+    "configs": Array [
+      Object {
+        "description": "Specifies global fetchPriority for dynamic import.",
+        "multiple": false,
+        "path": "module.parser.javascript/esm.dynamicImportFetchPriority",
+        "type": "enum",
+        "values": Array [
+          "low",
+          "high",
+          "auto",
+          false,
+        ],
+      },
+    ],
+    "description": "Specifies global fetchPriority for dynamic import.",
+    "multiple": false,
+    "simpleType": "string",
+  },
   "module-parser-javascript-esm-dynamic-import-mode": Object {
     "configs": Array [
       Object {
@@ -3137,6 +3653,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -3157,6 +3674,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -3180,6 +3698,23 @@ Object {
       },
     ],
     "description": "Include a polyfill for the 'global' variable.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-parser-javascript-esm-override-strict": Object {
+    "configs": Array [
+      Object {
+        "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
+        "multiple": false,
+        "path": "module.parser.javascript/esm.overrideStrict",
+        "type": "enum",
+        "values": Array [
+          "strict",
+          "non-strict",
+        ],
+      },
+    ],
+    "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
     "multiple": false,
     "simpleType": "string",
   },
@@ -3620,6 +4155,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -3640,6 +4176,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -3663,6 +4200,23 @@ Object {
       },
     ],
     "description": "Include a polyfill for the 'global' variable.",
+    "multiple": false,
+    "simpleType": "string",
+  },
+  "module-parser-javascript-override-strict": Object {
+    "configs": Array [
+      Object {
+        "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
+        "multiple": false,
+        "path": "module.parser.javascript.overrideStrict",
+        "type": "enum",
+        "values": Array [
+          "strict",
+          "non-strict",
+        ],
+      },
+    ],
+    "description": "Override the module to strict or non-strict. This may affect the behavior of the module (some behaviors differ between strict and non-strict), so please configure this option carefully.",
     "multiple": false,
     "simpleType": "string",
   },
@@ -4732,6 +5286,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -4752,6 +5307,7 @@ Object {
           true,
           "warn-mock",
           "mock",
+          "node-module",
           "eval-only",
         ],
       },
@@ -4777,6 +5333,19 @@ Object {
     "description": "Include a polyfill for the 'global' variable.",
     "multiple": false,
     "simpleType": "string",
+  },
+  "optimization-avoid-entry-iife": Object {
+    "configs": Array [
+      Object {
+        "description": "Avoid wrapping the entry module in an IIFE.",
+        "multiple": false,
+        "path": "optimization.avoidEntryIife",
+        "type": "boolean",
+      },
+    ],
+    "description": "Avoid wrapping the entry module in an IIFE.",
+    "multiple": false,
+    "simpleType": "boolean",
   },
   "optimization-check-wasm-types": Object {
     "configs": Array [
@@ -5134,6 +5703,12 @@ Object {
           "all",
         ],
       },
+      Object {
+        "description": "Select chunks for determining shared modules (defaults to \\"async\\", \\"initial\\" and \\"all\\" requires adding these chunks to the HTML).",
+        "multiple": false,
+        "path": "optimization.splitChunks.chunks",
+        "type": "RegExp",
+      },
     ],
     "description": "Select chunks for determining shared modules (defaults to \\"async\\", \\"initial\\" and \\"all\\" requires adding these chunks to the HTML).",
     "multiple": false,
@@ -5203,6 +5778,12 @@ Object {
           "async",
           "all",
         ],
+      },
+      Object {
+        "description": "Select chunks for determining shared modules (defaults to \\"async\\", \\"initial\\" and \\"all\\" requires adding these chunks to the HTML).",
+        "multiple": false,
+        "path": "optimization.splitChunks.fallbackCacheGroup.chunks",
+        "type": "RegExp",
       },
     ],
     "description": "Select chunks for determining shared modules (defaults to \\"async\\", \\"initial\\" and \\"all\\" requires adding these chunks to the HTML).",
@@ -5852,7 +6433,6 @@ Object {
         "path": "output.enabledWasmLoadingTypes[]",
         "type": "enum",
         "values": Array [
-          "fetch-streaming",
           "fetch",
           "async-node",
         ],
@@ -5894,6 +6474,19 @@ Object {
     "multiple": false,
     "simpleType": "boolean",
   },
+  "output-environment-async-function": Object {
+    "configs": Array [
+      Object {
+        "description": "The environment supports async function and await ('async function () { await ... }').",
+        "multiple": false,
+        "path": "output.environment.asyncFunction",
+        "type": "boolean",
+      },
+    ],
+    "description": "The environment supports async function and await ('async function () { await ... }').",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
   "output-environment-big-int-literal": Object {
     "configs": Array [
       Object {
@@ -5930,6 +6523,19 @@ Object {
       },
     ],
     "description": "The environment supports destructuring ('{ a, b } = obj').",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "output-environment-document": Object {
+    "configs": Array [
+      Object {
+        "description": "The environment supports 'document'.",
+        "multiple": false,
+        "path": "output.environment.document",
+        "type": "boolean",
+      },
+    ],
+    "description": "The environment supports 'document'.",
     "multiple": false,
     "simpleType": "boolean",
   },
@@ -5995,6 +6601,19 @@ Object {
       },
     ],
     "description": "The environment supports EcmaScript Module syntax to import EcmaScript modules (import ... from '...').",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "output-environment-node-prefix-for-core-modules": Object {
+    "configs": Array [
+      Object {
+        "description": "The environment supports \`node:\` prefix for Node.js core modules.",
+        "multiple": false,
+        "path": "output.environment.nodePrefixForCoreModules",
+        "type": "boolean",
+      },
+    ],
+    "description": "The environment supports \`node:\` prefix for Node.js core modules.",
     "multiple": false,
     "simpleType": "boolean",
   },
@@ -6727,7 +7346,6 @@ Object {
         "path": "output.wasmLoading",
         "type": "enum",
         "values": Array [
-          "fetch-streaming",
           "fetch",
           "async-node",
         ],
@@ -6821,7 +7439,6 @@ Object {
         "path": "output.workerWasmLoading",
         "type": "enum",
         "values": Array [
-          "fetch-streaming",
           "fetch",
           "async-node",
         ],
@@ -8216,6 +8833,38 @@ Object {
       },
     ],
     "description": "Use timestamps of the files/directories to determine invalidation.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
+  "snapshot-unmanaged-paths": Object {
+    "configs": Array [
+      Object {
+        "description": "A RegExp matching an unmanaged directory.",
+        "multiple": true,
+        "path": "snapshot.unmanagedPaths[]",
+        "type": "RegExp",
+      },
+      Object {
+        "description": "A path to an unmanaged directory.",
+        "multiple": true,
+        "path": "snapshot.unmanagedPaths[]",
+        "type": "path",
+      },
+    ],
+    "description": "A RegExp matching an unmanaged directory. A path to an unmanaged directory.",
+    "multiple": true,
+    "simpleType": "string",
+  },
+  "snapshot-unmanaged-paths-reset": Object {
+    "configs": Array [
+      Object {
+        "description": "Clear all items provided in 'snapshot.unmanagedPaths' configuration. List of paths that are not managed by a package manager and the contents are subject to change.",
+        "multiple": false,
+        "path": "snapshot.unmanagedPaths",
+        "type": "reset",
+      },
+    ],
+    "description": "Clear all items provided in 'snapshot.unmanagedPaths' configuration. List of paths that are not managed by a package manager and the contents are subject to change.",
     "multiple": false,
     "simpleType": "boolean",
   },

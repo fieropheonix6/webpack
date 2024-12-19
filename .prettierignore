@@ -9,6 +9,7 @@ test/**/*.*
 !test/**/errors.js
 !test/**/warnings.js
 !test/**/deprecations.js
+!test/**/infrastructure-log.js
 !test/*.md
 !test/helpers/*.*
 
@@ -29,3 +30,5 @@ schemas/**/*.check.js
 # Ignore example fixtures
 examples/
 !examples/**/webpack.config.js
+
+.vscode/**/*.*

@@ -4,7 +4,7 @@ require("./helpers/warmup-webpack");
 
 describe("Validation", () => {
 	const createTestCase = (name, config, fn) => {
-		it("should fail validation for " + name, () => {
+		it(`should fail validation for ${name}`, () => {
 			try {
 				const webpack = require("..");
 				webpack(config);
@@ -62,7 +62,7 @@ describe("Validation", () => {
 		msg =>
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
-			 - configuration.entry['bundle'] should be a non-empty array.
+			 - configuration.entry.bundle should be a non-empty array.
 			   -> All modules are loaded upon startup. The last one is exported."
 		`)
 	);
@@ -182,7 +182,7 @@ describe("Validation", () => {
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.module.rules[0].oneOf[0] has an unknown property 'passer'. These properties are valid:
-			   object { assert?, compiler?, dependency?, descriptionData?, enforce?, exclude?, generator?, include?, issuer?, issuerLayer?, layer?, loader?, mimetype?, oneOf?, options?, parser?, realResource?, resolve?, resource?, resourceFragment?, resourceQuery?, rules?, scheme?, sideEffects?, test?, type?, use? }
+			   object { assert?, compiler?, dependency?, descriptionData?, enforce?, exclude?, generator?, include?, issuer?, issuerLayer?, layer?, loader?, mimetype?, oneOf?, options?, parser?, realResource?, resolve?, resource?, resourceFragment?, resourceQuery?, rules?, scheme?, sideEffects?, test?, type?, use?, with? }
 			   -> A rule description with conditions and effects for modules."
 		`)
 	);
@@ -224,12 +224,12 @@ describe("Validation", () => {
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.devtool should be one of these:
-			   false | \\"eval\\" | string (should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$\\")
+			   false | \\"eval\\" | string (should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map(-debugids)?$\\")
 			   -> A developer tool to enhance debugging (false | eval | [inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map).
 			   Details:
 			    * configuration.devtool should be one of these:
 			      false | \\"eval\\"
-			    * configuration.devtool should be a string (should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$\\")."
+			    * configuration.devtool should be a string (should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map(-debugids)?$\\")."
 		`)
 	);
 
@@ -309,15 +309,18 @@ describe("Validation", () => {
 		"Invalid plugin provided: bool",
 		{
 			entry: "foo.js",
-			plugins: [false]
+			plugins: [true]
 		},
 		msg =>
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.plugins[0] should be one of these:
-			   object { apply, … } | function
+			   false | 0 | \\"\\" | null | undefined | object { apply, … } | function
 			   -> Plugin of type object or instanceof Function.
 			   Details:
+			    * configuration.plugins[0] should be one of these:
+			      false | 0 | \\"\\" | null | undefined
+			      -> These values will be ignored by webpack and created to be used with '&&' or '||' to improve readability of configurations.
 			    * configuration.plugins[0] should be an object:
 			      object { apply, … }
 			      -> Plugin instance.
@@ -336,9 +339,12 @@ describe("Validation", () => {
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.plugins[0] should be one of these:
-			   object { apply, … } | function
+			   false | 0 | \\"\\" | null | undefined | object { apply, … } | function
 			   -> Plugin of type object or instanceof Function.
 			   Details:
+			    * configuration.plugins[0] should be one of these:
+			      false | 0 | \\"\\" | null | undefined
+			      -> These values will be ignored by webpack and created to be used with '&&' or '||' to improve readability of configurations.
 			    * configuration.plugins[0] should be an object:
 			      object { apply, … }
 			      -> Plugin instance.
@@ -357,9 +363,12 @@ describe("Validation", () => {
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.plugins[0] should be one of these:
-			   object { apply, … } | function
+			   false | 0 | \\"\\" | null | undefined | object { apply, … } | function
 			   -> Plugin of type object or instanceof Function.
 			   Details:
+			    * configuration.plugins[0] should be one of these:
+			      false | 0 | \\"\\" | null | undefined
+			      -> These values will be ignored by webpack and created to be used with '&&' or '||' to improve readability of configurations.
 			    * configuration.plugins[0] should be an object:
 			      object { apply, … }
 			      -> Plugin instance.
@@ -378,9 +387,12 @@ describe("Validation", () => {
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.plugins[0] should be one of these:
-			   object { apply, … } | function
+			   false | 0 | \\"\\" | null | undefined | object { apply, … } | function
 			   -> Plugin of type object or instanceof Function.
 			   Details:
+			    * configuration.plugins[0] should be one of these:
+			      false | 0 | \\"\\" | null | undefined
+			      -> These values will be ignored by webpack and created to be used with '&&' or '||' to improve readability of configurations.
 			    * configuration.plugins[0] should be an object:
 			      object { apply, … }
 			      -> Plugin instance.
@@ -471,15 +483,7 @@ describe("Validation", () => {
 	createTestCase(
 		"holey array",
 		// eslint-disable-next-line no-sparse-arrays
-		[
-			{
-				mode: "production"
-			},
-			,
-			{
-				mode: "development"
-			}
-		],
+		[{ mode: "production" }, , { mode: "development" }],
 		msg =>
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
@@ -512,7 +516,7 @@ describe("Validation", () => {
 		msg =>
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
-			 - configuration.devtool should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$\\".
+			 - configuration.devtool should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map(-debugids)?$\\".
 			   BREAKING CHANGE since webpack 5: The devtool option is more strict.
 			   Please strictly follow the order of the keywords in the pattern."
 		`)
@@ -526,7 +530,7 @@ describe("Validation", () => {
 		msg =>
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
-			 - configuration.devtool should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$\\".
+			 - configuration.devtool should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map(-debugids)?$\\".
 			   BREAKING CHANGE since webpack 5: The devtool option is more strict.
 			   Please strictly follow the order of the keywords in the pattern."
 		`)
@@ -554,7 +558,7 @@ describe("Validation", () => {
 		msg =>
 			expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
-			 - configuration.devtool should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$\\".
+			 - configuration.devtool should match pattern \\"^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map(-debugids)?$\\".
 			   BREAKING CHANGE since webpack 5: The devtool option is more strict.
 			   Please strictly follow the order of the keywords in the pattern."
 		`)
@@ -614,7 +618,7 @@ describe("Validation", () => {
 				expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.optimization has an unknown property 'hashedModuleIds'. These properties are valid:
-			   object { checkWasmTypes?, chunkIds?, concatenateModules?, emitOnErrors?, flagIncludedChunks?, innerGraph?, mangleExports?, mangleWasmImports?, mergeDuplicateChunks?, minimize?, minimizer?, moduleIds?, noEmitOnErrors?, nodeEnv?, portableRecords?, providedExports?, realContentHash?, removeAvailableModules?, removeEmptyChunks?, runtimeChunk?, sideEffects?, splitChunks?, usedExports? }
+			   object { avoidEntryIife?, checkWasmTypes?, chunkIds?, concatenateModules?, emitOnErrors?, flagIncludedChunks?, innerGraph?, mangleExports?, mangleWasmImports?, mergeDuplicateChunks?, minimize?, minimizer?, moduleIds?, noEmitOnErrors?, nodeEnv?, portableRecords?, providedExports?, realContentHash?, removeAvailableModules?, removeEmptyChunks?, runtimeChunk?, sideEffects?, splitChunks?, usedExports? }
 			   -> Enables/Disables integrated optimizations.
 			   Did you mean optimization.moduleIds: \\"hashed\\" (BREAKING CHANGE since webpack 5)?"
 		`)
@@ -630,7 +634,7 @@ describe("Validation", () => {
 				expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.optimization has an unknown property 'namedChunks'. These properties are valid:
-			   object { checkWasmTypes?, chunkIds?, concatenateModules?, emitOnErrors?, flagIncludedChunks?, innerGraph?, mangleExports?, mangleWasmImports?, mergeDuplicateChunks?, minimize?, minimizer?, moduleIds?, noEmitOnErrors?, nodeEnv?, portableRecords?, providedExports?, realContentHash?, removeAvailableModules?, removeEmptyChunks?, runtimeChunk?, sideEffects?, splitChunks?, usedExports? }
+			   object { avoidEntryIife?, checkWasmTypes?, chunkIds?, concatenateModules?, emitOnErrors?, flagIncludedChunks?, innerGraph?, mangleExports?, mangleWasmImports?, mergeDuplicateChunks?, minimize?, minimizer?, moduleIds?, noEmitOnErrors?, nodeEnv?, portableRecords?, providedExports?, realContentHash?, removeAvailableModules?, removeEmptyChunks?, runtimeChunk?, sideEffects?, splitChunks?, usedExports? }
 			   -> Enables/Disables integrated optimizations.
 			   Did you mean optimization.chunkIds: \\"named\\" (BREAKING CHANGE since webpack 5)?"
 		`)
@@ -646,7 +650,7 @@ describe("Validation", () => {
 				expect(msg).toMatchInlineSnapshot(`
 			"Invalid configuration object. Webpack has been initialized using a configuration object that does not match the API schema.
 			 - configuration.optimization has an unknown property 'occurrenceOrder'. These properties are valid:
-			   object { checkWasmTypes?, chunkIds?, concatenateModules?, emitOnErrors?, flagIncludedChunks?, innerGraph?, mangleExports?, mangleWasmImports?, mergeDuplicateChunks?, minimize?, minimizer?, moduleIds?, noEmitOnErrors?, nodeEnv?, portableRecords?, providedExports?, realContentHash?, removeAvailableModules?, removeEmptyChunks?, runtimeChunk?, sideEffects?, splitChunks?, usedExports? }
+			   object { avoidEntryIife?, checkWasmTypes?, chunkIds?, concatenateModules?, emitOnErrors?, flagIncludedChunks?, innerGraph?, mangleExports?, mangleWasmImports?, mergeDuplicateChunks?, minimize?, minimizer?, moduleIds?, noEmitOnErrors?, nodeEnv?, portableRecords?, providedExports?, realContentHash?, removeAvailableModules?, removeEmptyChunks?, runtimeChunk?, sideEffects?, splitChunks?, usedExports? }
 			   -> Enables/Disables integrated optimizations.
 			   Did you mean optimization.chunkIds: \\"size\\" and optimization.moduleIds: \\"size\\" (BREAKING CHANGE since webpack 5)?"
 		`)

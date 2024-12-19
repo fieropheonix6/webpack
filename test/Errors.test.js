@@ -313,30 +313,30 @@ it("should emit no errors or warnings for no-errors-deprecate", async () => {
 it("should emit errors for missingFile for production", async () => {
 	await expect(compile({ mode: "production", entry: "./missingFile" })).resolves
 		.toMatchInlineSnapshot(`
-					Object {
-					  "errors": Array [
-					    Object {
-					      "loc": "4:0-20",
-					      "message": "Module not found: Error: Can't resolve './missing' in '<cwd>/test/fixtures/errors'",
-					      "moduleId": 814,
-					      "moduleIdentifier": "<cwd>/test/fixtures/errors/missingFile.js",
-					      "moduleName": "./missingFile.js",
-					      "moduleTrace": Array [],
-					      "stack": "ModuleNotFoundError: Module not found: Error: Can't resolve './missing' in '<cwd>/test/fixtures/errors'",
-					    },
-					    Object {
-					      "loc": "12:9-34",
-					      "message": "Module not found: Error: Can't resolve './dir/missing2' in '<cwd>/test/fixtures/errors'",
-					      "moduleId": 814,
-					      "moduleIdentifier": "<cwd>/test/fixtures/errors/missingFile.js",
-					      "moduleName": "./missingFile.js",
-					      "moduleTrace": Array [],
-					      "stack": "ModuleNotFoundError: Module not found: Error: Can't resolve './dir/missing2' in '<cwd>/test/fixtures/errors'",
-					    },
-					  ],
-					  "warnings": Array [],
-					}
-				`);
+		Object {
+		  "errors": Array [
+		    Object {
+		      "loc": "4:0-20",
+		      "message": "Module not found: Error: Can't resolve './missing' in '<cwd>/test/fixtures/errors'",
+		      "moduleId": 915,
+		      "moduleIdentifier": "<cwd>/test/fixtures/errors/missingFile.js",
+		      "moduleName": "./missingFile.js",
+		      "moduleTrace": Array [],
+		      "stack": "ModuleNotFoundError: Module not found: Error: Can't resolve './missing' in '<cwd>/test/fixtures/errors'",
+		    },
+		    Object {
+		      "loc": "12:9-34",
+		      "message": "Module not found: Error: Can't resolve './dir/missing2' in '<cwd>/test/fixtures/errors'",
+		      "moduleId": 915,
+		      "moduleIdentifier": "<cwd>/test/fixtures/errors/missingFile.js",
+		      "moduleName": "./missingFile.js",
+		      "moduleTrace": Array [],
+		      "stack": "ModuleNotFoundError: Module not found: Error: Can't resolve './dir/missing2' in '<cwd>/test/fixtures/errors'",
+		    },
+		  ],
+		  "warnings": Array [],
+		}
+	`);
 });
 
 it("should emit module build errors", async () => {
@@ -371,6 +371,26 @@ it("should bao; thrown sync error from plugin", async () => {
 					  "stack": "Error: foo",
 					}
 				`);
+});
+
+it("should emit warning when 'output.iife'=false is used with 'output.library.type'='umd'", async () => {
+	await expect(
+		compile({
+			mode: "production",
+			entry: "./false-iife-umd.js",
+			output: { library: { type: "umd" }, iife: false }
+		})
+	).resolves.toMatchInlineSnapshot(`
+		Object {
+		  "errors": Array [],
+		  "warnings": Array [
+		    Object {
+		      "message": "Configuration:\\nSetting 'output.iife' to 'false' is incompatible with 'output.library.type' set to 'umd'. This configuration may cause unexpected behavior, as UMD libraries are expected to use an IIFE (Immediately Invoked Function Expression) to support various module formats. Consider setting 'output.iife' to 'true' or choosing a different 'library.type' to ensure compatibility.\\nLearn more: https://webpack.js.org/configuration/output/",
+		      "stack": "FalseIIFEUmdWarning: Configuration:\\nSetting 'output.iife' to 'false' is incompatible with 'output.library.type' set to 'umd'. This configuration may cause unexpected behavior, as UMD libraries are expected to use an IIFE (Immediately Invoked Function Expression) to support various module formats. Consider setting 'output.iife' to 'true' or choosing a different 'library.type' to ensure compatibility.\\nLearn more: https://webpack.js.org/configuration/output/",
+		    },
+		  ],
+		}
+	`);
 });
 
 describe("loaders", () => {

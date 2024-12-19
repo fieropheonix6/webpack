@@ -20,6 +20,22 @@ module.exports = (env, { testPath }) => [
 	},
 	{
 		output: {
+			uniqueName: "modern-module",
+			filename: "modern-module.js",
+			libraryTarget: "modern-module"
+		},
+		target: "node14",
+		resolve: {
+			alias: {
+				external: "./non-external"
+			}
+		},
+		experiments: {
+			outputModule: true
+		}
+	},
+	{
+		output: {
 			uniqueName: "esm-runtimeChunk",
 			filename: "esm-runtimeChunk/[name].js",
 			libraryTarget: "module"
@@ -136,6 +152,53 @@ module.exports = (env, { testPath }) => [
 				external: "./non-external"
 			}
 		}
+	},
+	{
+		output: {
+			uniqueName: "true-iife-umd",
+			filename: "true-iife-umd.js",
+			library: {
+				type: "umd"
+			},
+			iife: true
+		},
+		resolve: {
+			alias: {
+				external: "./non-external"
+			}
+		}
+	},
+	{
+		output: {
+			uniqueName: "false-iife-umd",
+			filename: "false-iife-umd.js",
+			library: {
+				type: "umd"
+			},
+			iife: false
+		},
+		resolve: {
+			alias: {
+				external: "./non-external"
+			}
+		},
+		ignoreWarnings: [error => error.name === "FalseIIFEUmdWarning"]
+	},
+	{
+		output: {
+			uniqueName: "false-iife-umd2",
+			filename: "false-iife-umd2.js",
+			library: {
+				type: "umd2"
+			},
+			iife: false
+		},
+		resolve: {
+			alias: {
+				external: "./non-external"
+			}
+		},
+		ignoreWarnings: [error => error.name === "FalseIIFEUmdWarning"]
 	},
 	{
 		output: {
