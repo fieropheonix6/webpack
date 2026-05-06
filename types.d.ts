@@ -6876,6 +6876,12 @@ declare interface Experiments {
 	futureDefaults?: boolean;
 
 	/**
+	 * Enable experimental HTML support. This flag does not by itself make `.html` files usable directly as entry points without additional HTML handling.
+	 * @experimental
+	 */
+	html?: boolean;
+
+	/**
 	 * Compile entrypoints and import()s only when they are accessed.
 	 * @experimental
 	 */
@@ -6945,6 +6951,12 @@ declare interface ExperimentsNormalized {
 	 * @experimental
 	 */
 	futureDefaults?: boolean;
+
+	/**
+	 * Enable HTML entry support. Treats `.html` files as a first-class module type so they can be used directly as entry points.
+	 * @experimental
+	 */
+	html?: boolean;
 
 	/**
 	 * Compile entrypoints and import()s only when they are accessed.

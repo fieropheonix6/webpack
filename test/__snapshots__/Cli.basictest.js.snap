@@ -816,6 +816,19 @@ Object {
     "multiple": false,
     "simpleType": "boolean",
   },
+  "experiments-html": Object {
+    "configs": Array [
+      Object {
+        "description": "Enable experimental HTML support. This flag does not by itself make \`.html\` files usable directly as entry points without additional HTML handling.",
+        "multiple": false,
+        "path": "experiments.html",
+        "type": "boolean",
+      },
+    ],
+    "description": "Enable experimental HTML support. This flag does not by itself make \`.html\` files usable directly as entry points without additional HTML handling.",
+    "multiple": false,
+    "simpleType": "boolean",
+  },
   "experiments-lazy-compilation": Object {
     "configs": Array [
       Object {
