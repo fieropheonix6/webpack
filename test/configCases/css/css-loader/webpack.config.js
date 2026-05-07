@@ -1,11 +1,22 @@
 "use strict";
 
 const path = require("path");
+const webpack = require("../../../../");
 
 /** @typedef {import("../../../../").PathData} PathData */
+/** @typedef {import("../../../../").Configuration} Configuration */
+/** @typedef {"link" | "text" | "css-style-sheet" | "style"} ExportType */
 
-/** @type {import("../../../../").Configuration} */
-module.exports = {
+const EXPORT_TYPES =
+	/** @type {ExportType[]} */
+	(["link", "text", "css-style-sheet", "style"]);
+
+/**
+ * @param {ExportType} exportType css parser exportType
+ * @returns {Configuration} webpack configuration
+ */
+const createConfig = (exportType) => ({
+	name: exportType,
 	target: "web",
 	mode: "development",
 	devtool: false,
@@ -137,7 +148,12 @@ module.exports = {
 					localIdentHashDigestLength: 12
 				}
 			}
-		]
+		],
+		parser: {
+			css: {
+				exportType
+			}
+		}
 	},
 	resolve: {
 		alias: {
@@ -147,5 +163,12 @@ module.exports = {
 	},
 	experiments: {
 		css: true
-	}
-};
+	},
+	plugins: [
+		new webpack.DefinePlugin({
+			"process.env.EXPORT_TYPE": JSON.stringify(exportType)
+		})
+	]
+});
+
+module.exports = EXPORT_TYPES.map(createConfig);
