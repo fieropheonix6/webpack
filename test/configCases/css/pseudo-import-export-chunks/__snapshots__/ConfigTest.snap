@@ -1,0 +1,447 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ConfigTestCases css pseudo-import-export-chunks exported tests should resolve :import/:export in the initial chunk 1`] = `
+Array [
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+  "/*!*************************************!*\\\\
+  !*** css ./shared-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./initial-vars.modules.css ***!
+  \\\\**************************************/
+
+/*!*********************************!*\\\\
+  !*** css ./initial.modules.css ***!
+  \\\\*********************************/
+
+
+
+.initial_modules_css-initial {
+	color: red;
+	background: blue;
+	border-color: orange;
+}
+
+/*!************************************!*\\\\
+  !*** css ./chain-base.modules.css ***!
+  \\\\************************************/
+
+/*!**************************************!*\\\\
+  !*** css ./chain-middle.modules.css ***!
+  \\\\**************************************/
+
+
+.chain-middle_modules_css_1811-chain-middle {
+	color: hotpink;
+}
+
+/*!*************************************!*\\\\
+  !*** css ./custom-vars.modules.css ***!
+  \\\\*************************************/
+
+/*!****************************************!*\\\\
+  !*** css ./initial-custom.modules.css ***!
+  \\\\****************************************/
+
+
+.initial-custom_modules_css-initial-custom {
+	--initial-custom_modules_css-scoped-color: tomato;
+	color: var(--initial-custom_modules_css-scoped-color);
+}
+
+
+/*# sourceMappingURL=bundle0.css.map*/",
+]
+`;
