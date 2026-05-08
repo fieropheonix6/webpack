@@ -3,22 +3,25 @@
 const path = require("path");
 const webpack = require("../../../../");
 
+/** @type {NonNullable<import("../../../../").Configuration["module"]>["rules"]} */
+const baseRules = [
+	{
+		test: /\.my-css$/i,
+		type: "css/auto"
+	},
+	{
+		test: /\.invalid$/i,
+		type: "css/auto"
+	}
+];
+
 /** @type {import("../../../../").Configuration} */
 const base = {
 	experiments: {
 		css: true
 	},
 	module: {
-		rules: [
-			{
-				test: /\.my-css$/i,
-				type: "css/auto"
-			},
-			{
-				test: /\.invalid$/i,
-				type: "css/auto"
-			}
-		]
+		rules: baseRules
 	}
 };
 
@@ -172,16 +175,24 @@ module.exports = (env, { testPath }) => [
 			uniqueName: "my-app"
 		},
 		module: {
-			parser: {
-				"css/auto": {
-					animation: false,
-					customIdents: false,
-					dashedIdents: false,
-					container: false,
-					function: false,
-					grid: false
+			rules: [
+				...baseRules,
+				{
+					// Scope the disable to the entry only — @imported `.module.css`
+					// files keep default parser options (so custom properties in
+					// var-function.module.css are still hashed).
+					test: /style\.module\.css$/,
+					type: "css/auto",
+					parser: {
+						animation: false,
+						customIdents: false,
+						dashedIdents: false,
+						container: false,
+						function: false,
+						grid: false
+					}
 				}
-			}
+			]
 		},
 		node: {
 			__dirname: false,

@@ -41,7 +41,7 @@ Object {
 
 exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (css-style-sheet) 2`] = `
 Object {
-  "module": "classes_module_css_4420-module",
+  "module": "classes_module_css-module",
 }
 `;
 
@@ -950,7 +950,7 @@ Object {
   "_the_same_name": "_the_same_name",
   "className": "icss_module_css-className",
   "constructor": "constructor",
-  "reexport": "classes_module_css_5011-module",
+  "reexport": "classes_module_css-module",
   "toString": "toString",
 }
 `;
@@ -1051,6 +1051,13 @@ Object {
 }
 `;
 
+exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (css-style-sheet) 39`] = `
+Object {
+  "local-name": "composes-circular_module_css-local-name",
+  "other-name": "composes-circular_module_css-other-name composes-circular_module_css-local-name",
+}
+`;
+
 exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (link) 1`] = `
 Object {
   "@bounce": "basic_module_css-@bounce",
@@ -1092,7 +1099,7 @@ Object {
 
 exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (link) 2`] = `
 Object {
-  "module": "classes_module_css_cdbd-module",
+  "module": "classes_module_css-module",
 }
 `;
 
@@ -2001,7 +2008,7 @@ Object {
   "_the_same_name": "_the_same_name",
   "className": "icss_module_css-className",
   "constructor": "constructor",
-  "reexport": "classes_module_css_948f-module",
+  "reexport": "classes_module_css-module",
   "toString": "toString",
 }
 `;
@@ -2102,6 +2109,13 @@ Object {
 }
 `;
 
+exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (link) 39`] = `
+Object {
+  "local-name": "composes-circular_module_css-local-name",
+  "other-name": "composes-circular_module_css-other-name composes-circular_module_css-local-name",
+}
+`;
+
 exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (style) 1`] = `
 Object {
   "@bounce": "basic_module_css-@bounce",
@@ -2143,7 +2157,7 @@ Object {
 
 exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (style) 2`] = `
 Object {
-  "module": "classes_module_css_ad45-module",
+  "module": "classes_module_css-module",
 }
 `;
 
@@ -3052,7 +3066,7 @@ Object {
   "_the_same_name": "_the_same_name",
   "className": "icss_module_css-className",
   "constructor": "constructor",
-  "reexport": "classes_module_css_65f8-module",
+  "reexport": "classes_module_css-module",
   "toString": "toString",
 }
 `;
@@ -3153,6 +3167,13 @@ Object {
 }
 `;
 
+exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (style) 39`] = `
+Object {
+  "local-name": "composes-circular_module_css-local-name",
+  "other-name": "composes-circular_module_css-other-name composes-circular_module_css-local-name",
+}
+`;
+
 exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (text) 1`] = `
 Object {
   "@bounce": "basic_module_css-@bounce",
@@ -3194,7 +3215,7 @@ Object {
 
 exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (text) 2`] = `
 Object {
-  "module": "classes_module_css_0a63-module",
+  "module": "classes_module_css-module",
 }
 `;
 
@@ -4103,7 +4124,7 @@ Object {
   "_the_same_name": "_the_same_name",
   "className": "icss_module_css-className",
   "constructor": "constructor",
-  "reexport": "classes_module_css_08cb-module",
+  "reexport": "classes_module_css-module",
   "toString": "toString",
 }
 `;
@@ -4201,6 +4222,13 @@ Object {
   "v-large": "calc(v-base * 2)",
   "v-margin": "v-large 0",
   "v-shadow-color": "rgba(0, 0, 0, 0.5)",
+}
+`;
+
+exports[`ConfigTestCases css css-loader exported tests should export CSS module class names (text) 39`] = `
+Object {
+  "local-name": "composes-circular_module_css-local-name",
+  "other-name": "composes-circular_module_css-other-name composes-circular_module_css-local-name",
 }
 `;
 
@@ -4361,13 +4389,13 @@ a[href=\\"#b.c\\"].basic_module_css-x.basic_module_css-y {
 /* Tests from css-loader */
 
 /* should work with the \`default\` class and with named export */
-.classes_module_css_cdbd-default {
+.classes_module_css-default {
 	background: red
 }
 
 
 /* should work with the \`module\` class and with named export */
-.classes_module_css_cdbd-module {
+.classes_module_css-module {
 	background: red
 }
 
@@ -6528,22 +6556,6 @@ a[href=\\"#b.c\\"].basic_module_css-x.basic_module_css-y {
 }
 
 
-/*!***************************************************!*\\\\
-  !*** css ./classes.module.css (exportType: link) ***!
-  \\\\***************************************************/
-/* Tests from css-loader */
-
-/* should work with the \`default\` class and with named export */
-.classes_module_css_948f-default {
-	background: red
-}
-
-
-/* should work with the \`module\` class and with named export */
-.classes_module_css_948f-module {
-	background: red
-}
-
 /*!************************************************!*\\\\
   !*** css ./icss.module.css (exportType: link) ***!
   \\\\************************************************/
@@ -6556,7 +6568,7 @@ a[href=\\"#b.c\\"].basic_module_css-x.basic_module_css-y {
 
 
 .icss_module_css-className {
-	color: classes_module_css_948f-module;
+	color: classes_module_css-module;
 }
 
 
@@ -6794,6 +6806,17 @@ a[href=\\"#b.c\\"].basic_module_css-x.basic_module_css-y {
 .at-value-extra_module_css-multi-import {
 	color: gold;
 	background: navy;
+}
+
+/*!*************************************************************!*\\\\
+  !*** css ./composes-circular.module.css (exportType: link) ***!
+  \\\\*************************************************************/
+.composes-circular_module_css-local-name {
+	color: red;
+}
+
+.composes-circular_module_css-other-name {
+	background: blue;
 }
 
 ",
