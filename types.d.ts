@@ -9250,6 +9250,7 @@ type IgnorePluginOptions =
 type ImportAttributes = Record<string, string> & {};
 declare interface ImportDependencyMeta {
 	attributes?: ImportAttributes;
+	phase?: 0 | 1 | 2;
 	externalType?: "import" | "module";
 }
 type ImportExpressionJavascriptParser = ImportExpressionImport & {
