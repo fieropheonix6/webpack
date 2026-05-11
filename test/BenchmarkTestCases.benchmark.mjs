@@ -545,10 +545,20 @@ const withCodSpeed = async (bench) => {
 	const rootCallingFile = getCallingFile();
 
 	if (codspeedRunnerMode === "simulation" || codspeedRunnerMode === "memory") {
+		// Memory mode counts allocations in the instrumented region. With `--no-opt`
+		// (required by CodSpeed analysis mode), JIT stabilization isn't a factor,
+		// so 2 warmup runs are enough to populate require.cache, webpack lazy
+		// singletons, and V8 hidden classes. More warmup just bloats the heap with
+		// garbage that the pre-measurement drain has to clean up, raising the
+		// chance of an in-measurement GC and introducing variance across PRs that
+		// would otherwise touch identical code paths.
+		const warmupIterations =
+			codspeedRunnerMode === "memory" ? 2 : bench.iterations - 1;
+
 		const setupBenchRun = () => {
 			setupCore();
 			console.log(
-				`[CodSpeed] running with @codspeed/tinybench (${codspeedRunnerMode} mode)`
+				`[CodSpeed] running with @codspeed/tinybench (${codspeedRunnerMode} mode, ${warmupIterations} warmup iterations)`
 			);
 		};
 		const finalizeBenchRun = () => {
@@ -647,21 +657,31 @@ const withCodSpeed = async (bench) => {
 				// polluted by module loading, lazy webpack init, and JIT shape transitions.
 				const samples = [];
 
-				while (samples.length < bench.iterations - 1) {
+				while (samples.length < warmupIterations) {
 					samples.push(await iterationAsync(task, name));
 				}
 			}
 
 			await options?.beforeEach?.call(task, "run");
 			await mongoMeasurement.start(uri);
-			// Two GCs + microtask drain: a single major GC can leave promoted-but-
-			// unreachable objects pending finalization, which would otherwise be
-			// attributed to the measured sample (especially under massif).
-			global.gc?.();
-			global.gc?.();
+			// Drain heap before the instrumented region so allocations from the
+			// warmup runs aren't attributed to the measured sample (especially
+			// under massif). One GC can leave promoted-but-unreachable objects
+			// pending finalization; finalizers themselves can allocate. Loop
+			// `gc -> microtask` three times so each GC's finalizers get a chance
+			// to run and any garbage they produce is collected on the next pass,
+			// then drain pending IO with `setImmediate`, then one final GC to
+			// catch anything the IO callbacks left behind.
+			for (let i = 0; i < 3; i++) {
+				global.gc?.();
+				await new Promise((resolve) => {
+					queueMicrotask(() => resolve(undefined));
+				});
+			}
 			await new Promise((resolve) => {
 				setImmediate(resolve);
 			});
+			global.gc?.();
 			await wrapWithInstrumentHooksAsync(wrapFunctionWithFrame(fn, true), uri);
 			await mongoMeasurement.stop(uri);
 			await options?.afterEach?.call(task, "run");
@@ -733,17 +753,19 @@ const withCodSpeed = async (bench) => {
 				// Custom warmup — see the async path for rationale.
 				const samples = [];
 
-				while (samples.length < bench.iterations - 1) {
+				while (samples.length < warmupIterations) {
 					samples.push(iteration(task, name));
 				}
 			}
 
 			options?.beforeEach?.call(task, "run");
 
-			// Two GCs so finalization doesn't leak allocations into the measured
-			// sample (sync path has no microtask queue to drain).
-			global.gc?.();
-			global.gc?.();
+			// Multiple GC passes so finalization (and any allocations finalizers
+			// trigger) doesn't leak into the measured sample. The sync path has no
+			// microtask queue to drain, so we just chain GCs.
+			for (let i = 0; i < 4; i++) {
+				global.gc?.();
+			}
 			wrapWithInstrumentHooks(wrapFunctionWithFrame(fn, false), uri);
 
 			options?.afterEach?.call(task, "run");
@@ -765,8 +787,73 @@ const withCodSpeed = async (bench) => {
 		 */
 		const finalizeSyncRun = () => finalizeBenchRun();
 
+		/**
+		 * Run a task's per-task hooks plus one un-instrumented iteration. Used
+		 * as a global prime pass for memory mode so module loads, V8
+		 * hidden-class transitions, and inline-cache fills happen before any
+		 * measurement — removing the cross-task order-dependence that causes
+		 * the same benchmark to report different allocation counts across PRs.
+		 *
+		 * Intentionally skipped here: bench-level `setup` / `teardown`,
+		 * `beforeEach` / `afterEach`, `mongoMeasurement.start/stop`, and
+		 * `InstrumentHooks.startBenchmark/stopBenchmark`. Those belong to the
+		 * measurement loop and would either double-instrument or skew the
+		 * measured run if invoked here. `beforeAll` / `afterAll` are included
+		 * because they own setup/teardown that the iteration itself depends on
+		 * (e.g. the watch task opens its watcher in `beforeAll`).
+		 * @param {Task} task task
+		 * @returns {Promise<void>}
+		 */
+		const primeTaskAsync = async (task) => {
+			const meta = uriMap.get(task.name);
+			if (!meta) return;
+			await meta.options?.beforeAll?.call(task, "warmup");
+			try {
+				await iterationAsync(task, task.name);
+			} finally {
+				await meta.options?.afterAll?.call(task, "warmup");
+			}
+		};
+
+		/**
+		 * Sync version of primeTaskAsync — see that docstring for what is and
+		 * isn't included.
+		 * @param {Task} task task
+		 */
+		const primeTaskSync = (task) => {
+			const meta = uriMap.get(task.name);
+			if (!meta) return;
+			meta.options?.beforeAll?.call(task, "warmup");
+			try {
+				iteration(task, task.name);
+			} finally {
+				meta.options?.afterAll?.call(task, "warmup");
+			}
+		};
+
 		bench.run = async () => {
 			setupBenchRun();
+
+			if (codspeedRunnerMode === "memory") {
+				console.log(
+					`[CodSpeed] memory mode: priming ${bench.tasks.length} tasks before measurement.`
+				);
+				for (const task of bench.tasks) {
+					await primeTaskAsync(task);
+				}
+				// Drain heap accumulated by the prime pass so it can't leak
+				// into the first measurement.
+				for (let i = 0; i < 4; i++) {
+					global.gc?.();
+					await new Promise((resolve) => {
+						queueMicrotask(() => resolve(undefined));
+					});
+				}
+				await new Promise((resolve) => {
+					setImmediate(resolve);
+				});
+				global.gc?.();
+			}
 
 			for (const task of bench.tasks) {
 				const uri = getTaskUri(bench, task.name, rootCallingFile);
@@ -778,6 +865,18 @@ const withCodSpeed = async (bench) => {
 
 		bench.runSync = () => {
 			setupBenchRun();
+
+			if (codspeedRunnerMode === "memory") {
+				console.log(
+					`[CodSpeed] memory mode: priming ${bench.tasks.length} tasks before measurement.`
+				);
+				for (const task of bench.tasks) {
+					primeTaskSync(task);
+				}
+				for (let i = 0; i < 4; i++) {
+					global.gc?.();
+				}
+			}
 
 			for (const task of bench.tasks) {
 				const uri = getTaskUri(bench, task.name, rootCallingFile);
