@@ -266,26 +266,8 @@ Implementation example:
 ## Unoptimized
 
 ```
-asset output.js 11.3 KiB [emitted] (name: main)
-asset 655.output.js 761 bytes [emitted]
-chunk (runtime: main) 655.output.js 24 bytes [rendered]
-  > ./async-loaded ./example.js 6:0-24
-  ./async-loaded.js 24 bytes [built] [code generated]
-    [exports: answer]
-    [used exports unknown]
-    import() ./async-loaded ./example.js 6:0-24
-chunk (runtime: main) output.js (main) 457 bytes (javascript) 5.28 KiB (runtime) [entry] [rendered]
-  > ./example.js main
-  runtime modules 5.28 KiB 8 modules
-  dependent modules 281 bytes [dependent] 2 modules
-  ./example.js 176 bytes [built] [code generated]
-    [no exports]
-    [used exports unknown]
-    entry ./example.js main
-webpack X.X.X compiled successfully
-
-asset output.js 11.3 KiB [emitted] (name: main)
-asset 655.output.js 761 bytes [emitted]
+asset output.js 11.3 KiB [compared for emit] (name: main)
+asset 655.output.js 761 bytes [compared for emit]
 chunk (runtime: main) 655.output.js 24 bytes [rendered]
   > ./async-loaded ./example.js 6:0-24
   ./async-loaded.js 24 bytes [built] [code generated]
@@ -304,6 +286,24 @@ webpack X.X.X compiled successfully
 
 asset output.js 11.3 KiB [compared for emit] (name: main)
 asset 655.output.js 761 bytes [compared for emit]
+chunk (runtime: main) 655.output.js 24 bytes [rendered]
+  > ./async-loaded ./example.js 6:0-24
+  ./async-loaded.js 24 bytes [built] [code generated]
+    [exports: answer]
+    [used exports unknown]
+    import() ./async-loaded ./example.js 6:0-24
+chunk (runtime: main) output.js (main) 457 bytes (javascript) 5.28 KiB (runtime) [entry] [rendered]
+  > ./example.js main
+  runtime modules 5.28 KiB 8 modules
+  dependent modules 281 bytes [dependent] 2 modules
+  ./example.js 176 bytes [built] [code generated]
+    [no exports]
+    [used exports unknown]
+    entry ./example.js main
+webpack X.X.X compiled successfully
+
+asset output.js 11.3 KiB [emitted] (name: main)
+asset 655.output.js 761 bytes [emitted]
 chunk (runtime: main) 655.output.js 24 bytes [rendered]
   > ./async-loaded ./example.js 6:0-24
   ./async-loaded.js 24 bytes [built] [code generated]
@@ -340,8 +340,8 @@ chunk (runtime: main) output.js (main) 457 bytes (javascript) 5.28 KiB (runtime)
     entry ./example.js main
 webpack X.X.X compiled successfully
 
-asset output.js 1.99 KiB [compared for emit] [minimized] (name: main)
-asset 655.output.js 121 bytes [compared for emit] [minimized]
+asset output.js 1.99 KiB [emitted] [minimized] (name: main)
+asset 655.output.js 121 bytes [emitted] [minimized]
 chunk (runtime: main) 655.output.js 24 bytes [rendered]
   > ./async-loaded ./example.js 6:0-24
   ./async-loaded.js 24 bytes [built] [code generated]
@@ -356,8 +356,8 @@ chunk (runtime: main) output.js (main) 457 bytes (javascript) 5.28 KiB (runtime)
     entry ./example.js main
 webpack X.X.X compiled successfully
 
-asset output.js 1.99 KiB [emitted] [minimized] (name: main)
-asset 655.output.js 121 bytes [emitted] [minimized]
+asset output.js 1.99 KiB [compared for emit] [minimized] (name: main)
+asset 655.output.js 121 bytes [compared for emit] [minimized]
 chunk (runtime: main) 655.output.js 24 bytes [rendered]
   > ./async-loaded ./example.js 6:0-24
   ./async-loaded.js 24 bytes [built] [code generated]
